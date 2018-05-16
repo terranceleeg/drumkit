@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Drum Kit</title>
+
+    <style>
+        .key {
+  border: 2px solid black;
+  width: 100px;
+  height: 100px;
+  
+  text-align: center;
+  line-height: 100px;
+}
+    </style>
+
+    <script>
+        function playSound(e) {
+ const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+ const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
+ 
+  if (!audio) 
+  return; // stop the function
+ console.log(key);
+ audio.currentTime = 0; // rewind to the start 
+ audio.play();
+ key.classList.add('playing');
+}
+
+function removeTransition(e) {
+ if (e.propertyName !== 'transform') 
+  return; // skip it if it's not a transform
+ this.classList.remove('playing');
+}
+//Waiting for an event, the computer is listening for the event.
+  const keys = document.querySelectorAll('.key');
+  keys.forEach(key => key.addEventListener('transitionend', removeTransition));
+  window.addEventListener('keydown', playSound);
+
+
+    </script>
+
+</head>
+<body>
+    
+<div class="keys">
+    <div data-key="71" class="key">
+      <kbd>G</kbd>
+      <span class="sound">Label</span>
+    </div>
+</div>
+<div class="keys">
+    <div data-key="66" class="key">
+      <kbd>B</kbd>
+      <span class="sound">Label</span>
+    </div>
+</div>
+
+<audio data-key="71" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1145795/clap.wav"></audio>
+<audio data-key="66" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1147877/boom.wav"></audio>
+
+
+</body>
+</html>
